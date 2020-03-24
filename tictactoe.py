@@ -7,7 +7,7 @@ def game_board(game_map, player = 0, row = 0, column = 0, jut_display = False):
 			print("This position is occupied! Choose another.")
 			return game_map, False
 
-		print("   0  1  2")
+		print("   "+"  ".join([str(i) for i in range(len(game_map))]))
 		if not jut_display:
 			game_map[row][column] = player
 		for count, row in enumerate(game_map):
@@ -26,14 +26,16 @@ def game_board(game_map, player = 0, row = 0, column = 0, jut_display = False):
 def win(current_game):
 
 	def all_same(l):
-		if row.count(row[0]) == len(row) and row[0] != 0:
+		if l.count(l[0]) == len(l) and l[0] != 0:
 			return True
 		else:
 			return False
+
 	# Horizontal
 	for row in game:
 		if all_same(row):
 			print(f"Player {row[0]} is the winner horizontally. (-)")
+			return True
 
 	# Vertical
 	for col in range(len(game)):
@@ -44,6 +46,7 @@ def win(current_game):
 
 		if all_same(check):
 			print(f"Player {check[0]} is the winner vertically. (|)")
+			return True
 
 	# Diagonal
 	diags=[]
@@ -51,20 +54,23 @@ def win(current_game):
 		diags.append(game[row][col])
 	if all_same(diags):
 			print(f"Player {diags[0]} is the winner diagonally. (/)")
+			return True
 
 	# Diagonal
 	diags=[]
 	for ix in range(len(game)):
 		diags.append(game[ix][ix])
-	if all_same(row):
+	if all_same(diags):
 		print(f"Player {diags[0]} is the winner diagonally. (\)")		
+		return True
+
+	return False
 
 play = True
 players = [1,2]
 while play:
-	game = [[0, 0, 0],
-	        [0, 0, 0],
-	        [0, 0, 0]]
+	game_size = int(input("What size of game tic tac toe? "))
+	game = [[0 for i in range(game_size)] for i in range(game_size)]
 
 	game_won = False
 	game, _ = game_board(game, jut_display = True)
@@ -78,6 +84,18 @@ while play:
 			column_choice = int(input("Choose a column you wanna play (0, 1, 2): "))
 			row_choice = int(input("Choose a row you wanna play (0, 1, 2): "))
 			game, played = game_board(game, current_player, row_choice, column_choice)
+
+		if win(game):
+			game_won = True
+			again = input("Would you like to play the game again? (y/n) ")
+			if again.lower() == "y":
+				print("Restarting")
+			elif again.lower() == "n":
+				print("Thanks for playing. Bye.")
+				play = False
+			else:
+				print("Not a valid answer!")
+				play = False
 
 
 
