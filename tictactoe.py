@@ -31,7 +31,17 @@ def win(current_game):
 		if check.count(check[0]) == len(check) and check[0] != 0:
 			print("Winner")
 
+	diags=[]
+	for col, row in enumerate(reversed(range(len(game)))):
+		diags.append(game[row][col])
+	print(diags)
+
+	diags=[]
+	for ix in range(len(game)):
+		diags.append(game[ix][ix])
+	print(diags)
+
 
 game = game_board(game, jut_display = True)
-game = game_board(game, player = 1, row = 1, column = 1)
+game = game_board(game, player = 1, row = 0, column = 0)
 win(game)
