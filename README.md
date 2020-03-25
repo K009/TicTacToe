@@ -8,6 +8,7 @@
   `$ py -3.7 tictactoe.py`
   ## How to play
   Firstly you choose game size by typing number of column/rows.
+  
   ![Image of project](images/game_board.png "game_board")
   
   Then you're typing column and row you wanna play
